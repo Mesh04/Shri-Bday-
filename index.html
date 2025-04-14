@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 21st My Shri!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #2d92d0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .container {
+      background: #9fedf4;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .question {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      background: #ff9999;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+
+    .options button:hover {
+      background: #ff6666;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .final-message {
+      font-size: 1.2em;
+      color: #d6336c;
+      margin-top: 40px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    #quiz-image {
+      max-width: 70%;
+      height: auto;
+      border-radius: 10px;
+      margin: 0 auto 15px auto;
+      display: block;
+    }
+
+    @media (max-width: 500px) {
+      .question {
+        font-size: 1.1em;
+      }
+
+      .options button {
+        font-size: 0.95em;
+        padding: 10px;
+      }
+
+      .final-message {
+        font-size: 1.05em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="quiz-container">
+      <img id="quiz-image" src="" alt="Memory photo" style="display: none;">
+      <div id="question" class="question"></div>
+      <div class="options" id="options"></div>
+    </div>
+
+    <div id="final" class="hidden">
+      <h2>Aw you got everything right!</h2>
+      <p class="final-message" id="final-message"></p>
+    </div>
+  </div>
+
+  <script>
+    // === ✅ ENTER YOUR QUESTIONS, ANSWERS, AND IMAGE FILE NAMES HERE ===
+    const quizData = [
+      {
+        question: "Answer everything correct to see my message.",
+        options: ["I Love Mesh and I'm ready to play", "You only have one option"],
+        answer: "I Love Mesh and I'm ready to play",
+        image: "Holi.png" // 🖼️ Replace with your actual image file name
+      },
+      {
+        question: "What date was our first kiss?",
+        options: ["1st January", "26th March", "13th February", "Only happened in my dreams"],
+        answer: "13th February",
+        image: "Holi2.jpg" // 🖼️ Replace with your actual image file name
+      },
+      {
+        question: "Where did we first go for tea?",
+        options: ["My Apartment", "Your Arjie's House", "16th By KOI", "We don't drink tea"],
+        answer: "16th By KOI",
+        image: "tea.jpg"
+      },
+      {
+        question: "How do you spell your name?",
+        options: ["Shreya", "Shriya"],
+        answer: "Shreya",
+        image: "norm1.jpg"
+      },
+      {
+        question: "What is the best food ever (you have to choose it to continue :) ?",
+        options: ["Steak", "Baked Beans", "Mutton Curry", "Lamb Chops"],
+        answer: "Baked Beans",
+        image: "Side eye.jpg"
+      },
+      {
+        question: "Who is your favorite person in the world?",
+        options: ["Hardik Pandya", "Mesh"],
+        answer: "Mesh",
+        image: "Side 2.jpg"
+      }
+    ];
+
+    // === 📝 FINAL BIRTHDAY MESSAGE ===
+    const finalCard = `
+
+Happy 21st Birthday, My Beautiful Shri! 🎉
+
+I had such a great time with you last night, you looked so beautiful (I know I'm typing this in advance but I already know you looked beautiful 😉)
+
+I love how authentic you are - you never feel the need to be a certain way for me or anyone. Your confidence is so attractive. Don't ever change. Your kindness is endless and you have such a pure heart. 
+
+I love how no matter what happens, you don't give up. I find that so inspiring. I enjoy our random conversations and how you're always able to just listen and never judge. 
+
+You make it so, so easy for me to be myself (even if that version of me annoys you 😛). I'm able to laugh freely, be vulnerable, and most importantly - you feed my delusions and I love that.
+
+Thank you for being patient with me. I know I can be a pain sometimes, but you always find a way to make me feel loved.
+
+Here's to all the years ahead of us.
+
+I love you so much. 💖
+
+Love,
+Mesh
+    `;
+
+    // === 🧠 QUIZ LOGIC ===
+    let current = 0;
+
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const finalEl = document.getElementById('final');
+    const finalMsgEl = document.getElementById('final-message');
+    const imageEl = document.getElementById('quiz-image');
+
+    function loadQuestion() {
+      const q = quizData[current];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = '';
+
+      if (q.image) {
+        imageEl.src = q.image;
+        imageEl.style.display = 'block';
+      } else {
+        imageEl.style.display = 'none';
+      }
+
+      q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(option);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      if (selected === quizData[current].answer) {
+        current++;
+        if (current < quizData.length) {
+          loadQuestion();
+        } else {
+          document.getElementById('quiz-container').classList.add('hidden');
+          finalEl.classList.remove('hidden');
+          finalMsgEl.textContent = finalCard;
+        }
+      } else {
+        alert("Unlucky Buddy, let's try again 😬");
+      }
+    }
+
+    // Start quiz
+    loadQuestion();
+  </script>
+</body>
+</html>
