@@ -89,6 +89,7 @@
 <body>
   <div class="container">
     <div id="quiz-container">
+      <!-- ✅ Image container -->
       <img id="quiz-image" src="" alt="Memory photo" style="display: none;">
       <div id="question" class="question"></div>
       <div class="options" id="options"></div>
@@ -101,19 +102,19 @@
   </div>
 
   <script>
-    // === ✅ ENTER YOUR QUESTIONS, ANSWERS, AND IMAGE FILE NAMES HERE ===
+    // ✅ Replace these image file names with the actual images you upload (no spaces!)
     const quizData = [
       {
         question: "Answer everything correct to see my message.",
         options: ["I Love Mesh and I'm ready to play", "You only have one option"],
         answer: "I Love Mesh and I'm ready to play",
-        image: "Holi.png" // 🖼️ Replace with your actual image file name
+        image: "Holi.png"
       },
       {
         question: "What date was our first kiss?",
         options: ["1st January", "26th March", "13th February", "Only happened in my dreams"],
         answer: "13th February",
-        image: "Holi2.jpg" // 🖼️ Replace with your actual image file name
+        image: "Holi2.jpg"
       },
       {
         question: "Where did we first go for tea?",
@@ -131,17 +132,16 @@
         question: "What is the best food ever (you have to choose it to continue :) ?",
         options: ["Steak", "Baked Beans", "Mutton Curry", "Lamb Chops"],
         answer: "Baked Beans",
-        image: "Side eye.jpg"
+        image: "side-eye.jpg"
       },
       {
         question: "Who is your favorite person in the world?",
         options: ["Hardik Pandya", "Mesh"],
         answer: "Mesh",
-        image: "Side 2.jpg"
+        image: "side-2.jpg"
       }
     ];
 
-    // === 📝 FINAL BIRTHDAY MESSAGE ===
     const finalCard = `
 
 Happy 21st Birthday, My Beautiful Shri! 🎉
@@ -164,7 +164,6 @@ Love,
 Mesh
     `;
 
-    // === 🧠 QUIZ LOGIC ===
     let current = 0;
 
     const questionEl = document.getElementById('question');
@@ -208,7 +207,6 @@ Mesh
       }
     }
 
-    // Start quiz
     loadQuestion();
   </script>
 </body>
